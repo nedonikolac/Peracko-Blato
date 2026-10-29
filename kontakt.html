@@ -1,0 +1,494 @@
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peračko Blato-Kontakt</title>
+    <link rel="icon" href="GRB.jpeg">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f3ec;
+        }
+
+        header {
+            background: #173d32;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .menu {
+            position: relative;
+        }
+
+        .menu button {
+            background: #d9b778;
+            border: none;
+            padding: 12px 16px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 48px;
+            background: white;
+            min-width: 190px;
+            box-shadow: 0 4px 12px #0003;
+            border-radius: 6px;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 14px;
+            color: #173d32;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background: #e8eee9;
+        }
+
+        .menu.open .dropdown {
+            display: block;
+        }
+
+        main {
+            padding: 40px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="logo">PERAČKO BLATO</div>
+    <h2 align="center"><i>KONTAKT</i></h2>
+
+    <div class="menu" id="menu">
+        <button id="menuButton"
+                aria-expanded="false"
+                aria-controls="dropdown"
+                aria-label="Otvori izbornik">☰</button>
+
+        <nav class="dropdown" id="dropdown">
+            <a href="index.html">Početna</a>
+            <a href="o-nama.html">O našem mistu</a>
+            <a href="dogadaji.html">Događaji</a>
+            <a href="galerija.html">Galerija</a>
+            <a href="kontakt.html">Kontakt</a>
+        </nav>
+    </div>
+</header>
+
+<script>
+    const menu = document.getElementById("menu");
+    const button = document.getElementById("menuButton");
+
+    button.addEventListener("click", function () {
+        const otvoren = menu.classList.toggle("open");
+        button.setAttribute("aria-expanded", otvoren);
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!menu.contains(event.target)) {
+            menu.classList.remove("open");
+            button.setAttribute("aria-expanded", "false");
+        }
+    });
+</script>
+
+<style>
+    .kontakt-stranica {
+        background: #f5f3ec;
+        color: #173d32;
+        padding: 45px 6%;
+        min-height: 80vh;
+        font-family: Arial, sans-serif;
+    }
+
+    .kontakt-uvod {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .kontakt-uvod h1 {
+        font-size: 38px;
+        margin-bottom: 12px;
+    }
+
+    .kontakt-uvod p {
+        color: #647067;
+        line-height: 1.7;
+    }
+
+    .kontakt-raspored {
+        max-width: 1100px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    .kontakt-info {
+        background: #173d32;
+        color: white;
+        border-radius: 12px;
+        padding: 28px;
+    }
+
+    .kontakt-info h2 {
+        margin-top: 0;
+        font-size: 24px;
+    }
+
+    .kontakt-info p {
+        color: #e0e8e2;
+        line-height: 1.7;
+        font-size: 14px;
+    }
+
+    .kontakt-stavka {
+        margin-top: 25px;
+        padding-top: 18px;
+        border-top: 1px solid #476458;
+    }
+
+    .kontakt-stavka h3 {
+        color: #d9b778;
+        font-size: 15px;
+        margin-bottom: 8px;
+    }
+
+    .kontakt-stavka a {
+        color: white;
+        text-decoration: none;
+        overflow-wrap: anywhere;
+    }
+
+    .kontakt-obrazac {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 20px #173d3210;
+    }
+
+    .kontakt-obrazac h2 {
+        margin-top: 0;
+        font-size: 25px;
+    }
+
+    .kontakt-obrazac > p {
+        color: #647067;
+        line-height: 1.6;
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .kontakt-polje {
+        margin-bottom: 18px;
+    }
+
+    .kontakt-polje label {
+        display: block;
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .kontakt-polje input,
+    .kontakt-polje select,
+    .kontakt-polje textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d5ddd5;
+        border-radius: 6px;
+        font: inherit;
+        font-size: 14px;
+        background: #fcfcf9;
+        color: #173d32;
+    }
+
+    .kontakt-polje textarea {
+        min-height: 140px;
+        resize: vertical;
+    }
+
+    .kontakt-polje input:focus,
+    .kontakt-polje select:focus,
+    .kontakt-polje textarea:focus {
+        outline: 2px solid #d9b778;
+        border-color: #173d32;
+    }
+
+    .kontakt-gumb {
+        background: #173d32;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 14px 22px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .kontakt-gumb:hover {
+        background: #285746;
+    }
+
+    .kontakt-napomena {
+        font-size: 12px;
+        color: #647067;
+        line-height: 1.6;
+        margin-top: 15px;
+    }
+
+    .kontakt-donji {
+        max-width: 1100px;
+        margin: 35px auto 0;
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+    }
+
+    .kontakt-donji h2 {
+        margin-top: 0;
+    }
+
+    .kontakt-donji p {
+        color: #647067;
+        line-height: 1.7;
+    }
+
+    @media (max-width: 750px) {
+        .kontakt-raspored {
+            grid-template-columns: 1fr;
+        }
+
+        .kontakt-stranica {
+            padding: 30px 4%;
+        }
+
+        .kontakt-uvod h1 {
+            font-size: 31px;
+        }
+
+        .kontakt-obrazac,
+        .kontakt-info {
+            padding: 22px;
+        }
+    }
+</style>
+
+
+<!-- GLAVNI DIO KONTAKT STRANICE -->
+
+<main class="kontakt-stranica">
+
+    <section class="kontakt-uvod">
+        <h1>Kontaktiraj nas</h1>
+
+        <p>
+            Imaš zanimljivu priču, fotografiju ili informaciju
+            iz Peračkog Blata? Javi nam se!
+        </p>
+    </section>
+
+
+    <section class="kontakt-raspored">
+
+        <!-- LIJEVA STRANA: KONTAKT INFORMACIJE -->
+
+        <div class="kontakt-info">
+
+            <h2>Budimo u kontaktu</h2>
+
+            <p>
+                Ova stranica postoji kako bismo na jednom mjestu
+                okupili priče, uspomene i događaje našega mista.
+                Slobodno nam pošalji prijedlog ili zanimljivost.
+            </p>
+
+            <div class="kontakt-stavka">
+                <h3>✉ E-mail</h3>
+
+                <!-- OVDJE UPIŠI SVOJ E-MAIL -->
+                <p>
+                    <a href="nedo.nikolac1@gmail.com">
+                        OVDJE_UPISI_EMAIL
+                    </a>
+                </p>
+            </div>
+
+            <div class="kontakt-stavka">
+                <h3>📷 Instagram</h3>
+
+                <!-- OVDJE STAVI POVEZNICU INSTAGRAMA -->
+                <p>
+                    <a href="https://www.instagram.com/nikolacphotography.1?vrfl=MWFpdzMwOHIyMmltaw=="
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Posjeti naš Instagram →
+                    </a>
+                </p>
+            </div>
+
+            <div class="kontakt-stavka">
+                <h3>📍 Lokacija</h3>
+
+                <p>
+                    Peračko Blato, Hrvatska
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- DESNA STRANA: OBRAZAC -->
+
+        <div class="kontakt-obrazac">
+
+            <h2>Pošalji nam poruku</h2>
+
+            <p>
+                Ispuni obrazac i napiši što želiš podijeliti
+                s nama.
+            </p>
+
+            <form id="kontaktForma">
+
+                <div class="kontakt-polje">
+                    <label for="ime">Ime</label>
+
+                    <input
+                        type="text"
+                        id="ime"
+                        name="ime"
+                        placeholder="Upiši svoje ime"
+                        required>
+                </div>
+
+
+                <div class="kontakt-polje">
+                    <label for="email">E-mail adresa</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="nedo.nikolac1@gmail.com"
+                        required>
+                </div>
+
+
+                <div class="kontakt-polje">
+                    <label for="tema">Tema poruke</label>
+
+                    <select id="tema" name="tema" required>
+                        <option value="">Odaberi temu</option>
+                        <option value="Opći upit">Opći upit</option>
+                        <option value="Događaj">Najava događaja</option>
+                        <option value="Fotografija">Slanje fotografije</option>
+                        <option value="Uspomena">Stara fotografija ili uspomena</option>
+                        <option value="Ideja">Prijedlog za stranicu</option>
+                        <option value="Ostalo">Ostalo</option>
+                    </select>
+                </div>
+
+
+                <div class="kontakt-polje">
+                    <label for="poruka">Tvoja poruka</label>
+
+                    <textarea
+                        id="poruka"
+                        name="poruka"
+                        placeholder="Napiši svoju poruku..."
+                        required></textarea>
+                </div>
+
+
+                <button type="submit" class="kontakt-gumb">
+                    Pripremi poruku →
+                </button>
+
+                <p class="kontakt-napomena">
+                    Klikom na gumb otvorit će se tvoj e-mail
+                    program s pripremljenom porukom.
+                </p>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- DONJI DIO -->
+
+    <section class="kontakt-donji">
+
+        <h2>Imaš priču za naše misto?</h2>
+
+        <p>
+            Stare fotografije, zanimljivi događaji, uspomene
+            ili dobre lokalne fore — svaki doprinos pomaže
+            da sačuvamo priču Peračkog Blata.
+        </p>
+
+    </section>
+
+</main>
+
+
+<script>
+    document.getElementById("kontaktForma").addEventListener(
+        "submit",
+        function (event) {
+            event.preventDefault();
+
+            const ime = document.getElementById("ime").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const tema = document.getElementById("tema").value;
+            const poruka = document.getElementById("poruka").value.trim();
+
+            // ZAMIJENI OVU ADRESU SVOJOM STVARNOM E-MAIL ADRESOM
+            const primatelj = "OVDJE_UPISI_EMAIL";
+
+            const predmet = encodeURIComponent(
+                "Peračko Blato - " + tema
+            );
+
+            const tekst = encodeURIComponent(
+                "Ime: " + ime + "\n" +
+                "E-mail: " + email + "\n" +
+                "Tema: " + tema + "\n\n" +
+                poruka
+            );
+
+            window.location.href =
+                "mailto:" + primatelj +
+                "?subject=" + predmet +
+                "&body=" + tekst;
+        }
+    );
+</script>
+
+</body>
+</html>

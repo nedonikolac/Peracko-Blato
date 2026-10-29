@@ -1,0 +1,500 @@
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peračko Blato-Galerija</title>
+    <link rel="icon" href="GRB.jpeg">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f3ec;
+        }
+
+        header {
+            background: #173d32;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .menu {
+            position: relative;
+        }
+
+        .menu button {
+            background: #d9b778;
+            border: none;
+            padding: 12px 16px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 48px;
+            background: white;
+            min-width: 190px;
+            box-shadow: 0 4px 12px #0003;
+            border-radius: 6px;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 14px;
+            color: #173d32;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background: #e8eee9;
+        }
+
+        .menu.open .dropdown {
+            display: block;
+        }
+
+        main {
+            padding: 40px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="logo">PERAČKO BLATO</div>
+    <h2 align="center"><i>GALERIJA</i></h2>
+
+    <div class="menu" id="menu">
+        <button id="menuButton"
+                aria-expanded="false"
+                aria-controls="dropdown"
+                aria-label="Otvori izbornik">☰</button>
+
+        <nav class="dropdown" id="dropdown">
+            <a href="index.html">Početna</a>
+            <a href="o-nama.html">O našem mistu</a>
+            <a href="dogadaji.html">Događaji</a>
+            <a href="galerija.html">Galerija</a>
+            <a href="kontakt.html">Kontakt</a>
+        </nav>
+    </div>
+</header>
+
+<script>
+    const menu = document.getElementById("menu");
+    const button = document.getElementById("menuButton");
+
+    button.addEventListener("click", function () {
+        const otvoren = menu.classList.toggle("open");
+        button.setAttribute("aria-expanded", otvoren);
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!menu.contains(event.target)) {
+            menu.classList.remove("open");
+            button.setAttribute("aria-expanded", "false");
+        }
+    });
+</script>
+ <style>
+    .galerija-sadrzaj {
+        background: #f5f3ec;
+        color: #173d32;
+        padding: 45px 6%;
+        min-height: 80vh;
+        font-family: Arial, sans-serif;
+    }
+
+    .galerija-uvod {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .galerija-uvod h1 {
+        font-size: 38px;
+        margin-bottom: 12px;
+    }
+
+    .galerija-uvod p {
+        color: #647067;
+        line-height: 1.7;
+    }
+
+    .galerija-filteri {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 25px 0 35px;
+    }
+
+    .galerija-filteri button {
+        border: none;
+        background: #e3e8df;
+        color: #173d32;
+        padding: 11px 17px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .galerija-filteri button.aktivno,
+    .galerija-filteri button:hover {
+        background: #173d32;
+        color: white;
+    }
+
+    .galerija-mreza {
+        max-width: 1250px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+    }
+
+    .galerija-slika {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px #173d3210;
+        transition: transform 0.2s;
+    }
+
+    .galerija-slika:hover {
+        transform: translateY(-5px);
+    }
+
+    .galerija-slika img {
+        width: 100%;
+        height: 235px;
+        display: block;
+        object-fit: cover;
+        background: #dfe5dc;
+        cursor: pointer;
+    }
+
+    .galerija-opis {
+        padding: 16px;
+    }
+
+    .galerija-opis h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+    }
+
+    .galerija-opis p {
+        color: #647067;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .galerija-oznaka {
+        display: inline-block;
+        margin-bottom: 9px;
+        color: #967439;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .galerija-prazno {
+        display: none;
+        text-align: center;
+        padding: 30px;
+        color: #647067;
+    }
+
+    /* UVEĆANA FOTOGRAFIJA */
+
+    .galerija-lightbox {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.92);
+        align-items: center;
+        justify-content: center;
+        padding: 25px;
+    }
+
+    .galerija-lightbox.otvoreno {
+        display: flex;
+    }
+
+    .galerija-lightbox img {
+        max-width: 95%;
+        max-height: 85vh;
+        object-fit: contain;
+    }
+
+    .galerija-zatvori {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        border: none;
+        background: transparent;
+        color: white;
+        font-size: 38px;
+        cursor: pointer;
+    }
+
+    @media (max-width: 850px) {
+        .galerija-mreza {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .galerija-sadrzaj {
+            padding: 30px 4%;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .galerija-mreza {
+            grid-template-columns: 1fr;
+        }
+
+        .galerija-uvod h1 {
+            font-size: 30px;
+        }
+
+        .galerija-slika img {
+            height: 240px;
+        }
+    }
+</style>
+
+
+<!-- GLAVNI DIO GALERIJE -->
+
+<main class="galerija-sadrzaj">
+
+    <section class="galerija-uvod">
+        <h1>Naše misto kroz objektiv</h1>
+
+        <p>
+            Priroda, ljudi, događaji i uspomene.
+            Sve ono zbog čega je Peračko Blato posebno.
+        </p>
+    </section>
+
+
+    <!-- KATEGORIJE -->
+
+    <div class="galerija-filteri">
+        <button class="aktivno" data-filter="sve">Sve fotografije</button>
+        <button data-filter="selo">Selo</button>
+        <button data-filter="priroda">Priroda</button>
+        <button data-filter="dogadaji">Događaji</button>
+        <button data-filter="uspomene">Uspomene</button>
+    </div>
+
+
+    <!-- FOTOGRAFIJE -->
+
+    <section class="galerija-mreza">
+
+        <!-- SLIKA 1 -->
+        <article class="galerija-slika" data-kategorija="selo">
+            <img
+                src="slika_2.jpeg"
+                alt="Peračko Blato iz zraka"
+                loading="lazy">
+
+            <div class="galerija-opis">
+                <span class="galerija-oznaka">Selo</span>
+                <h3>Naše Peračko Blato</h3>
+                <p>Pogled na naše misto i njegovu okolicu.</p>
+            </div>
+        </article>
+
+
+        <!-- SLIKA 2 -->
+        <article class="galerija-slika" data-kategorija="priroda">
+            <img
+                src="OVDJE_STAVI_POVEZNICU_SLIKE_2"
+                alt="Priroda oko Peračkog Blata"
+                loading="lazy">
+
+            <div class="galerija-opis">
+                <span class="galerija-oznaka">Priroda</span>
+                <h3>Ljepote našega kraja</h3>
+                <p>Prirodni prizori koji nas okružuju.</p>
+            </div>
+        </article>
+
+
+        <!-- SLIKA 3 -->
+        <article class="galerija-slika" data-kategorija="dogadaji">
+            <img
+                src="igraliste.jpeg"
+                alt="Događaj u Peračkom Blatu"
+                loading="lazy">
+
+            <div class="galerija-opis">
+                <span class="galerija-oznaka">Događaji</span>
+                <h3>Druženje u našem mistu</h3>
+                <p>Fotografije s lokalnih događaja i okupljanja.</p>
+            </div>
+        </article>
+
+        <!-- SLIKA 5 -->
+        <article class="galerija-slika" data-kategorija="priroda">
+            <img
+                src="OVDJE_STAVI_POVEZNICU_SLIKE_5"
+                alt="Krajolik u okolici sela"
+                loading="lazy">
+
+            <div class="galerija-opis">
+                <span class="galerija-oznaka">Priroda</span>
+                <h3>Naš kraj izbliza</h3>
+                <p>Detalji i mjesta koja vrijedi fotografirati.</p>
+            </div>
+        </article>
+
+
+        <!-- SLIKA 8 -->
+        <article class="galerija-slika" data-kategorija="uspomene">
+            <img
+                src="OVDJE_STAVI_POVEZNICU_SLIKE_8"
+                alt="Uspomene iz prošlosti sela"
+                loading="lazy">
+
+            <div class="galerija-opis">
+                <span class="galerija-oznaka">Uspomene</span>
+                <h3>Kako je nekad bilo</h3>
+                <p>Sačuvajmo priče i fotografije naših mještana.</p>
+            </div>
+        </article>
+
+
+        <!-- SLIKA 9 -->
+        <article class="galerija-slika" data-kategorija="priroda">
+            <img
+                src="plaza.jpg"
+                alt="Prirodni krajolik"
+                loading="lazy">
+
+            <div class="galerija-opis">
+                <span class="galerija-oznaka">Priroda</span>
+                <h3>Zabava</h3>
+                <p>Još jedan pogled na prirodu koja nas okružuje.</p>
+            </div>
+        </article>
+
+    </section>
+
+    <p class="galerija-prazno" id="galerijaPrazno">
+        U ovoj kategoriji još nema fotografija.
+    </p>
+
+</main>
+
+
+<!-- UVEĆANJE FOTOGRAFIJE KLIKOM -->
+
+<div class="galerija-lightbox" id="galerijaLightbox">
+    <button class="galerija-zatvori"
+            id="galerijaZatvori"
+            aria-label="Zatvori fotografiju">&times;</button>
+
+    <img src="" alt="Uvećana fotografija" id="galerijaVelikaSlika">
+</div>
+
+
+<script>
+    const filteri = document.querySelectorAll(
+        ".galerija-filteri button"
+    );
+
+    const fotografije = document.querySelectorAll(
+        ".galerija-slika"
+    );
+
+    const prazno = document.getElementById("galerijaPrazno");
+
+    filteri.forEach(function (gumb) {
+        gumb.addEventListener("click", function () {
+            const kategorija = gumb.dataset.filter;
+            let brojVidljivih = 0;
+
+            filteri.forEach(function (drugiGumb) {
+                drugiGumb.classList.remove("aktivno");
+            });
+
+            gumb.classList.add("aktivno");
+
+            fotografije.forEach(function (kartica) {
+                const prikazi =
+                    kategorija === "sve" ||
+                    kartica.dataset.kategorija === kategorija;
+
+                kartica.style.display = prikazi ? "" : "none";
+
+                if (prikazi) {
+                    brojVidljivih++;
+                }
+            });
+
+            prazno.style.display =
+                brojVidljivih === 0 ? "block" : "none";
+        });
+    });
+
+
+    const lightbox = document.getElementById("galerijaLightbox");
+    const velikaSlika = document.getElementById("galerijaVelikaSlika");
+    const zatvori = document.getElementById("galerijaZatvori");
+
+    document.querySelectorAll(".galerija-slika img").forEach(function (slika) {
+        slika.addEventListener("click", function () {
+            if (!slika.src ||
+                slika.src.includes("OVDJE_STAVI_POVEZNICU")) {
+                return;
+            }
+
+            velikaSlika.src = slika.src;
+            velikaSlika.alt = slika.alt;
+            lightbox.classList.add("otvoreno");
+        });
+    });
+
+    function zatvoriGaleriju() {
+        lightbox.classList.remove("otvoreno");
+        velikaSlika.src = "";
+    }
+
+    zatvori.addEventListener("click", zatvoriGaleriju);
+
+    lightbox.addEventListener("click", function (event) {
+        if (event.target === lightbox) {
+            zatvoriGaleriju();
+        }
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            zatvoriGaleriju();
+        }
+    });
+</script>
+
+</body>
+</html>
